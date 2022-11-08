@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS siviajes;
+USE siviajes;
+
 CREATE TABLE `Usuario` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`mail` varchar(100) NOT NULL UNIQUE,
@@ -14,12 +17,13 @@ CREATE TABLE `Empresa` (
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(30) NOT NULL,
 	`direccion` varchar(50) NOT NULL,
+	`fecha_creacion` DATETIME NOT NULL,
 	`fk_plan` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Conductor` (
-	`id` bigint NOT NULL AUTO_INCREMENT UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(55) NOT NULL,
 	`direccion` varchar(100) NOT NULL,
@@ -71,14 +75,14 @@ CREATE TABLE `Pasaje` (
 	`precio` int NOT NULL,
 	`fecha_compra` DATETIME NOT NULL,
 	`fk_estado` int NOT NULL,
-	`fk_ruta` bit NOT NULL,
+	`fk_ruta` int NOT NULL,
 	`fk_cliente` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Cliente` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
-	`mail` varchar(100) NOT NULL AUTO_INCREMENT UNIQUE,
+	`mail` varchar(100) NOT NULL UNIQUE,
 	`secreto` varchar(13) NOT NULL UNIQUE,
 	`fecha_creacion` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
@@ -106,8 +110,9 @@ CREATE TABLE `PermisoUsuario` (
 );
 
 CREATE TABLE `Estado` (
-	`id` int NOT NULL,
-	`nombre` varchar(10) NOT NULL
+	`id` int NOT NULL AUTO_INCREMENT,
+	`nombre` varchar(10) NOT NULL,
+	PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
@@ -116,11 +121,9 @@ ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) RE
 
 ALTER TABLE `Empresa` ADD CONSTRAINT `Empresa_fk0` FOREIGN KEY (`fk_plan`) REFERENCES `Plan`(`id`);
 
-ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk0` FOREIGN KEY (`fecha_salida`) REFERENCES ``(``);
+ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
-ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk1` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
-
-ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
+ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `Vehiculo` ADD CONSTRAINT `Vehiculo_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
@@ -163,7 +166,7 @@ INSERT INTO Plan (nombre, descripcion, precio) VALUES ('basico', 'basico', 10000
 INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '20221108 00:01:00 AM', 1);
 
 -- Usuario
-INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', 'test', '20221108 00:01:00 AM', 1, 1);
+INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', 'test', 'test', '20221108 00:01:00 AM', 1, 1);
 
 -- Cliente
 INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '20221108 00:00:00 AM');

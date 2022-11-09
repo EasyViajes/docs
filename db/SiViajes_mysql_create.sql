@@ -163,11 +163,12 @@ INSERT INTO Plan (nombre, descripcion, precio) VALUES ('default', 'default', 0);
 INSERT INTO Plan (nombre, descripcion, precio) VALUES ('basico', 'basico', 10000);
 
 -- Empresa 
-INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '20221108 00:01:00 AM', 1);
+INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '2022-11-08 00:01:00', 1);
 
 -- Usuario
-INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', 'test', 'test', '20221108 00:01:00 AM', 1, 1);
+-- pwd = testing
+INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', '$2y$10$OcM.dECTEpfsXa6jbN37j.8XzXfphIzHdQ/yEVWdmK8mq7wHTfsbG', 'test', '2022-11-08 00:01:00', 1, 1);
 
 -- Cliente
-INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '20221108 00:00:00 AM');
-INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test2.test2@test2.com', 'abcd123456789', '20221108 00:01:00 AM');
+INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00');
+INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test2.test2@test2.com', 'abcd123456789', '2022-11-09 16:36:42');

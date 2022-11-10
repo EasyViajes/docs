@@ -27,9 +27,9 @@ CREATE TABLE `Conductor` (
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(55) NOT NULL,
 	`direccion` varchar(100) NOT NULL,
-	`fecha_ingreso` DATETIME NOT NULL,
-	`fecha_salida` DATETIME NOT NULL,
-	`fin_contrato` DATETIME NOT NULL,
+	`fecha_ingreso` DATE NOT NULL,
+	`fecha_salida` DATE NOT NULL,
+	`fin_contrato` DATE NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
 	PRIMARY KEY (`id`)
@@ -61,7 +61,7 @@ CREATE TABLE `Ticket` (
 
 CREATE TABLE `Ruta` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
-	`hr_salida` DATETIME NOT NULL,
+	`hora_salida` TIME NOT NULL,
 	`origen` varchar(50) NOT NULL,
 	`destino` varchar(50) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
@@ -73,10 +73,9 @@ CREATE TABLE `Ruta` (
 CREATE TABLE `Pasaje` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`precio` int NOT NULL,
-	`fecha_compra` DATETIME NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_ruta` int NOT NULL,
-	`fk_cliente` int NOT NULL,
+	`fk_empresa` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -115,6 +114,16 @@ CREATE TABLE `Estado` (
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `Venta` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`fecha_compra` DATETIME NOT NULL,
+	`fk_estado` int NOT NULL,
+	`fk_pasaje` int NOT NULL,
+	`fk_empresa` int NOT NULL,
+	`fk_cliente` int NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
@@ -143,11 +152,19 @@ ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk0` FOREIGN KEY (`fk_estado`) REFER
 
 ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk1` FOREIGN KEY (`fk_ruta`) REFERENCES `Ruta`(`id`);
 
-ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk2` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
+ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `PermisoUsuario` ADD CONSTRAINT `PermisoUsuario_fk0` FOREIGN KEY (`id_usuario`) REFERENCES `Usuario`(`id`);
 
 ALTER TABLE `PermisoUsuario` ADD CONSTRAINT `PermisoUsuario_fk1` FOREIGN KEY (`id_permiso`) REFERENCES `Permiso`(`id`);
+
+ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
+
+ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk1` FOREIGN KEY (`fk_pasaje`) REFERENCES `Pasaje`(`id`);
+
+ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
+
+ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
 
 -- Default Values
 -- Estado
@@ -172,3 +189,4 @@ INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empre
 -- Cliente
 INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00');
 INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test2.test2@test2.com', 'abcd123456789', '2022-11-09 16:36:42');
+

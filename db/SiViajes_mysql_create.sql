@@ -181,12 +181,14 @@ INSERT INTO Plan (nombre, descripcion, precio) VALUES ('basico', 'basico', 10000
 
 -- Empresa 
 INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '2022-11-08 00:01:00', 1);
+INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('3.333.333-3', 'empresa_ADM', 'Direcc. 333 test', '2022-11-08 00:01:00', 1);
 
 -- Usuario
 -- pwd = testing
+-- pwd = administrator
 INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', '$2y$10$OcM.dECTEpfsXa6jbN37j.8XzXfphIzHdQ/yEVWdmK8mq7wHTfsbG', 'test', '2022-11-08 00:01:00', 1, 1);
+INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('adm@adm.com', '$2y$10$urw9CmEtJwDi5SY/vbaOeeD7RC106CxTCfvZ2wqgblugamP6Wq..W', 'adm', '2022-11-08 00:01:00', 1, 2);
 
 -- Cliente
 INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00');
 INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test2.test2@test2.com', 'abcd123456789', '2022-11-09 16:36:42');
-

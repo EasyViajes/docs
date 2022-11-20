@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS siviajes;
-USE siviajes;
+-- CREATE DATABASE IF NOT EXISTS siviajes;
+-- USE siviajes;
 
 CREATE TABLE `Usuario` (
 	`id` int NOT NULL AUTO_INCREMENT,
@@ -124,6 +124,37 @@ CREATE TABLE `Venta` (
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `Comuna` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) DEFAULT NULL,
+  `idProvincia` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `COMUNA_PROVINCIA_ID` (`idProvincia`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=347 ;
+
+CREATE TABLE `Provincia` (
+  `id` int(3) NOT NULL DEFAULT '0',
+  `nombre` varchar(23) DEFAULT NULL,
+  `idRegion` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `PROVINCIA_REGION_ID` (`idRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Region` (
+  `id` int(2) NOT NULL DEFAULT '0',
+  `nombre` varchar(50) DEFAULT NULL,
+  `ISO_3166_2_CL` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `Comuna`
+  ADD CONSTRAINT `Comuna_fk1` FOREIGN KEY (`idProvincia`) REFERENCES `Provincia` (`id`) ON UPDATE CASCADE;
+
+ALTER TABLE `Provincia`
+  ADD CONSTRAINT `Provincia_fk1` FOREIGN KEY (`idRegion`) REFERENCES `Region` (`id`) ON UPDATE CASCADE;
+COMMIT;
+
+
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
@@ -165,30 +196,3 @@ ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk1` FOREIGN KEY (`fk_pasaje`) REFEREN
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
-
--- Default Values
--- Estado
-INSERT INTO Estado (nombre) VALUES ('Activo');
-INSERT INTO Estado (nombre) VALUES ('Inactivo');
-INSERT INTO Estado (nombre) VALUES ('Pendiente');
-INSERT INTO Estado (nombre) VALUES ('Atrasado');
-INSERT INTO Estado (nombre) VALUES ('Otro');
-
--- Plan
-INSERT INTO Plan (nombre, descripcion, precio) VALUES ('test', 'test', 11111);
-INSERT INTO Plan (nombre, descripcion, precio) VALUES ('default', 'default', 0);
-INSERT INTO Plan (nombre, descripcion, precio) VALUES ('basico', 'basico', 10000);
-
--- Empresa 
-INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '2022-11-08 00:01:00', 1);
-INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES ('3.333.333-3', 'empresa_ADM', 'Direcc. 333 test', '2022-11-08 00:01:00', 1);
-
--- Usuario
--- pwd = testing
--- pwd = administrator
-INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('test.test@test.com', '$2y$10$OcM.dECTEpfsXa6jbN37j.8XzXfphIzHdQ/yEVWdmK8mq7wHTfsbG', 'test', '2022-11-08 00:01:00', 1, 1);
-INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES ('adm@adm.com', '$2y$10$urw9CmEtJwDi5SY/vbaOeeD7RC106CxTCfvZ2wqgblugamP6Wq..W', 'adm', '2022-11-08 00:01:00', 1, 2);
-
--- Cliente
-INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00');
-INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES ('test2.test2@test2.com', 'abcd123456789', '2022-11-09 16:36:42');

@@ -1,52 +1,29 @@
--- phpMyAdmin SQL Dump
--- version 4.0.10deb1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jan 12, 2016 at 02:05 PM
--- Server version: 5.5.46-0ubuntu0.14.04.2
--- PHP Version: 5.5.9-1ubuntu4.14
+-- ESTADO
+INSERT INTO Estado (nombre) VALUES
+('Activo'),
+('Inactivo'),
+('Pendiente'),
+('Atrasado'),
+('Otro');
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- EMPRESA 
+INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES
+('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '2022-11-08 00:01:00', 1),
+('3.333.333-3', 'empresa_ADM', 'Direcc. 333 test', '2022-11-08 00:01:00', 1);
 
+-- USUARIO
+-- pwd = testing
+-- pwd = administrator
+INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES
+('test.test@test.com', '$2y$10$OcM.dECTEpfsXa6jbN37j.8XzXfphIzHdQ/yEVWdmK8mq7wHTfsbG', 'test', '2022-11-08 00:01:00', 1, 1),
+('adm@adm.com', '$2y$10$urw9CmEtJwDi5SY/vbaOeeD7RC106CxTCfvZ2wqgblugamP6Wq..W', 'adm', '2022-11-08 00:01:00', 1, 2);
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+-- CLIENTE
+INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES
+('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00'),
+('test2.test2@test2.com', 'abcd123456789', '2022-11-08 00:00:00');
 
---
--- Database: `CHILE`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Comuna`
---
-
-DROP TABLE IF EXISTS `Comuna`;
-CREATE TABLE IF NOT EXISTS `Comuna` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) DEFAULT NULL,
-  `idProvincia` int(3) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `COMUNA_PROVINCIA_ID` (`idProvincia`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=347 ;
-
---
--- RELATIONS FOR TABLE `Comuna`:
---   `idProvincia`
---       `Provincia` -> `id`
---
-
---
--- Dumping data for table `Comuna`
---
-
+-- DATA CHILE
 INSERT INTO `Comuna` (`id`, `nombre`, `idProvincia`) VALUES
 (1, 'Iquique', 3),
 (2, 'Alto Hospicio', 3),
@@ -395,31 +372,6 @@ INSERT INTO `Comuna` (`id`, `nombre`, `idProvincia`) VALUES
 (345, 'Putre', 2),
 (346, 'General Lagos', 2);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `Provincia`
---
-
-DROP TABLE IF EXISTS `Provincia`;
-CREATE TABLE IF NOT EXISTS `Provincia` (
-  `id` int(3) NOT NULL DEFAULT '0',
-  `nombre` varchar(23) DEFAULT NULL,
-  `idRegion` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `PROVINCIA_REGION_ID` (`idRegion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- RELATIONS FOR TABLE `Provincia`:
---   `idRegion`
---       `Region` -> `id`
---
-
---
--- Dumping data for table `Provincia`
---
-
 INSERT INTO `Provincia` (`id`, `nombre`, `idRegion`) VALUES
 (1, 'Arica', 15),
 (2, 'Parinacota', 15),
@@ -476,24 +428,6 @@ INSERT INTO `Provincia` (`id`, `nombre`, `idRegion`) VALUES
 (53, 'Melipilla', 13),
 (54, 'Talagante', 13);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `Region`
---
-
-DROP TABLE IF EXISTS `Region`;
-CREATE TABLE IF NOT EXISTS `Region` (
-  `id` int(2) NOT NULL DEFAULT '0',
-  `nombre` varchar(50) DEFAULT NULL,
-  `ISO_3166_2_CL` varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `Region`
---
-
 INSERT INTO `Region` (`id`, `nombre`, `ISO_3166_2_CL`) VALUES
 (1, 'Tarapacá', 'CL-TA'),
 (2, 'Antofagasta', 'CL-AN'),
@@ -511,23 +445,3 @@ INSERT INTO `Region` (`id`, `nombre`, `ISO_3166_2_CL`) VALUES
 (14, 'Región de Los Ríos', 'CL-LR'),
 (15, 'Arica y Parinacota', 'CL-AP');
 
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `Comuna`
---
-ALTER TABLE `Comuna`
-  ADD CONSTRAINT `Comuna_ibfk_1` FOREIGN KEY (`idProvincia`) REFERENCES `Provincia` (`id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `Provincia`
---
-ALTER TABLE `Provincia`
-  ADD CONSTRAINT `Provincia_ibfk_1` FOREIGN KEY (`idRegion`) REFERENCES `Region` (`id`) ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

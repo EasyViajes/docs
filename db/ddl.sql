@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS EasyViajes;
 USE EasyViajes;
 
 CREATE TABLE `Usuario` (
-	`id` int NOT NULL,
+	`id` int NOT NULL AUTO_INCREMENT,
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`password` varchar(255) NOT NULL,
 	`nombre` varchar(55) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `Usuario` (
 );
 
 CREATE TABLE `Empresa` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(30) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `Empresa` (
 );
 
 CREATE TABLE `Conductor` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(55) NOT NULL,
 	`fecha_ingreso` DATE NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `Conductor` (
 );
 
 CREATE TABLE `Vehiculo` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`patente` varchar(10) NOT NULL UNIQUE,
 	`marca` varchar(30) NOT NULL,
 	`asientos` int(2) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `Vehiculo` (
 );
 
 CREATE TABLE `Ruta` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`hora_salida` TIME NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
 	`fk_direccion_origen` int NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `Ruta` (
 );
 
 CREATE TABLE `Pasaje` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`precio` int NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_ruta` int NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE `Pasaje` (
 );
 
 CREATE TABLE `Cliente` (
-	`id` int NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`secreto` varchar(13) NOT NULL UNIQUE,
 	`fecha_creacion` DATETIME NOT NULL,
@@ -75,19 +75,19 @@ CREATE TABLE `Cliente` (
 );
 
 CREATE TABLE `Permiso` (
-	`id` int NOT NULL,
-	`nombre` varchar(15) NOT NULL UNIQUE,
+	`id` int NOT NULL AUTO_INCREMENT,
+	`nombre` varchar(30) NOT NULL UNIQUE,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Estado` (
-	`id` int NOT NULL,
+	`id` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(10) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Venta` (
-	`id` int NOT NULL,
+	`id` int NOT NULL AUTO_INCREMENT,
 	`fecha_compra` DATETIME NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_pasaje` int NOT NULL,
@@ -97,21 +97,21 @@ CREATE TABLE `Venta` (
 );
 
 CREATE TABLE `Comuna` (
-	`id` int(11) NOT NULL,
+	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(20),
 	`fk_provincia` int(3),
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Provincia` (
-	`id` int(3) NOT NULL DEFAULT '0',
+	`id` int(3) NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(23),
 	`fk_region` int(2),
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Region` (
-	`id` int(2) NOT NULL DEFAULT '0',
+	`id` int(2) NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(50),
 	`ISO_3166_2_CL` varchar(5),
 	PRIMARY KEY (`id`)

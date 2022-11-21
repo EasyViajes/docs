@@ -6,25 +6,88 @@ INSERT INTO Estado (nombre) VALUES
 ('Atrasado'),
 ('Otro');
 
--- EMPRESA 
-INSERT INTO Empresa (rut, nombre, direccion, fecha_creacion, fk_plan) VALUES
-('22.222.222-2', 'empresa_test', 'Direcc. 111 test', '2022-11-08 00:01:00', 1),
-('3.333.333-3', 'empresa_ADM', 'Direcc. 333 test', '2022-11-08 00:01:00', 1);
-
--- USUARIO
--- pwd = testing
--- pwd = administrator
-INSERT INTO Usuario (mail, password, nombre, fecha_creacion, fk_estado, fk_empresa) VALUES
-('test.test@test.com', '$2y$10$OcM.dECTEpfsXa6jbN37j.8XzXfphIzHdQ/yEVWdmK8mq7wHTfsbG', 'test', '2022-11-08 00:01:00', 1, 1),
-('adm@adm.com', '$2y$10$urw9CmEtJwDi5SY/vbaOeeD7RC106CxTCfvZ2wqgblugamP6Wq..W', 'adm', '2022-11-08 00:01:00', 1, 2);
-
--- CLIENTE
-INSERT INTO Cliente (mail, secreto, fecha_creacion) VALUES
-('test.test@test.com', '123456789abcd', '2022-11-08 00:00:00'),
-('test2.test2@test2.com', 'abcd123456789', '2022-11-08 00:00:00');
+INSERT INTO Permiso (nombre) VALUES
+('Administrador_EasyViajes'),
+('Administrador_empresa'),
+('Conductor'),
+('Otro');
 
 -- DATA CHILE
-INSERT INTO `Comuna` (`id`, `nombre`, `idProvincia`) VALUES
+
+INSERT INTO `Region` (`id`, `nombre`, `ISO_3166_2_CL`) VALUES
+(1, 'Tarapacá', 'CL-TA'),
+(2, 'Antofagasta', 'CL-AN'),
+(3, 'Atacama', 'CL-AT'),
+(4, 'Coquimbo', 'CL-CO'),
+(5, 'Valparaíso', 'CL-VS'),
+(6, 'Región del Libertador Gral. Bernardo O’Higgins', 'CL-LI'),
+(7, 'Región del Maule', 'CL-ML'),
+(8, 'Región del Biobío', 'CL-BI'),
+(9, 'Región de la Araucanía', 'CL-AR'),
+(10, 'Región de Los Lagos', 'CL-LL'),
+(11, 'Región Aisén del Gral. Carlos Ibáñez del Campo', 'CL-AI'),
+(12, 'Región de Magallanes y de la Antártica Chilena', 'CL-MA'),
+(13, 'Región Metropolitana de Santiago', 'CL-RM'),
+(14, 'Región de Los Ríos', 'CL-LR'),
+(15, 'Arica y Parinacota', 'CL-AP');
+
+INSERT INTO `Provincia` (`id`, `nombre`, `fk_region`) VALUES
+(1, 'Arica', 15),
+(2, 'Parinacota', 15),
+(3, 'Iquique', 1),
+(4, 'Tamarugal', 1),
+(5, 'Antofagasta', 2),
+(6, 'El Loa', 2),
+(7, 'Tocopilla', 2),
+(8, 'Copiapó', 3),
+(9, 'Chañaral', 3),
+(10, 'Huasco', 3),
+(11, 'Elqui', 4),
+(12, 'Choapa', 4),
+(13, 'Limarí', 4),
+(14, 'Valparaíso', 5),
+(15, 'Isla de Pascua', 5),
+(16, 'Los Andes', 5),
+(17, 'Petorca', 5),
+(18, 'Quillota', 5),
+(19, 'San Antonio', 5),
+(20, 'San Felipe de Aconcagua', 5),
+(21, 'Marga Marga', 5),
+(22, 'Cachapoal', 6),
+(23, 'Cardenal Caro', 6),
+(24, 'Colchagua', 6),
+(25, 'Talca', 7),
+(26, 'Cauquenes', 7),
+(27, 'Curicó', 7),
+(28, 'Linares', 7),
+(29, 'Concepción', 8),
+(30, 'Arauco', 8),
+(31, 'Biobío', 8),
+(32, 'Ñuble', 8),
+(33, 'Cautín', 9),
+(34, 'Malleco', 9),
+(35, 'Valdivia', 14),
+(36, 'Ranco', 14),
+(37, 'Llanquihue', 10),
+(38, 'Chiloé', 10),
+(39, 'Osorno', 10),
+(40, 'Palena', 10),
+(41, 'Coihaique', 11),
+(42, 'Aisén', 11),
+(43, 'Capitán Prat', 11),
+(44, 'General Carrera', 11),
+(45, 'Magallanes', 12),
+(46, 'Antártica Chilena', 12),
+(47, 'Tierra del Fuego', 12),
+(48, 'Última Esperanza', 12),
+(49, 'Santiago', 13),
+(50, 'Cordillera', 13),
+(51, 'Chacabuco', 13),
+(52, 'Maipo', 13),
+(53, 'Melipilla', 13),
+(54, 'Talagante', 13);
+
+INSERT INTO `Comuna` (`id`, `nombre`, `fk_provincia`) VALUES
 (1, 'Iquique', 3),
 (2, 'Alto Hospicio', 3),
 (3, 'Pozo Almonte', 4),
@@ -372,76 +435,16 @@ INSERT INTO `Comuna` (`id`, `nombre`, `idProvincia`) VALUES
 (345, 'Putre', 2),
 (346, 'General Lagos', 2);
 
-INSERT INTO `Provincia` (`id`, `nombre`, `idRegion`) VALUES
-(1, 'Arica', 15),
-(2, 'Parinacota', 15),
-(3, 'Iquique', 1),
-(4, 'Tamarugal', 1),
-(5, 'Antofagasta', 2),
-(6, 'El Loa', 2),
-(7, 'Tocopilla', 2),
-(8, 'Copiapó', 3),
-(9, 'Chañaral', 3),
-(10, 'Huasco', 3),
-(11, 'Elqui', 4),
-(12, 'Choapa', 4),
-(13, 'Limarí', 4),
-(14, 'Valparaíso', 5),
-(15, 'Isla de Pascua', 5),
-(16, 'Los Andes', 5),
-(17, 'Petorca', 5),
-(18, 'Quillota', 5),
-(19, 'San Antonio', 5),
-(20, 'San Felipe de Aconcagua', 5),
-(21, 'Marga Marga', 5),
-(22, 'Cachapoal', 6),
-(23, 'Cardenal Caro', 6),
-(24, 'Colchagua', 6),
-(25, 'Talca', 7),
-(26, 'Cauquenes', 7),
-(27, 'Curicó', 7),
-(28, 'Linares', 7),
-(29, 'Concepción', 8),
-(30, 'Arauco', 8),
-(31, 'Biobío', 8),
-(32, 'Ñuble', 8),
-(33, 'Cautín', 9),
-(34, 'Malleco', 9),
-(35, 'Valdivia', 14),
-(36, 'Ranco', 14),
-(37, 'Llanquihue', 10),
-(38, 'Chiloé', 10),
-(39, 'Osorno', 10),
-(40, 'Palena', 10),
-(41, 'Coihaique', 11),
-(42, 'Aisén', 11),
-(43, 'Capitán Prat', 11),
-(44, 'General Carrera', 11),
-(45, 'Magallanes', 12),
-(46, 'Antártica Chilena', 12),
-(47, 'Tierra del Fuego', 12),
-(48, 'Última Esperanza', 12),
-(49, 'Santiago', 13),
-(50, 'Cordillera', 13),
-(51, 'Chacabuco', 13),
-(52, 'Maipo', 13),
-(53, 'Melipilla', 13),
-(54, 'Talagante', 13);
+--- Direccion 
+INSERT INTO Direccion (id, nombre, fk_comuna) VALUES
+(1, 'EasyViajes',  1);
 
-INSERT INTO `Region` (`id`, `nombre`, `ISO_3166_2_CL`) VALUES
-(1, 'Tarapacá', 'CL-TA'),
-(2, 'Antofagasta', 'CL-AN'),
-(3, 'Atacama', 'CL-AT'),
-(4, 'Coquimbo', 'CL-CO'),
-(5, 'Valparaíso', 'CL-VS'),
-(6, 'Región del Libertador Gral. Bernardo O’Higgins', 'CL-LI'),
-(7, 'Región del Maule', 'CL-ML'),
-(8, 'Región del Biobío', 'CL-BI'),
-(9, 'Región de la Araucanía', 'CL-AR'),
-(10, 'Región de Los Lagos', 'CL-LL'),
-(11, 'Región Aisén del Gral. Carlos Ibáñez del Campo', 'CL-AI'),
-(12, 'Región de Magallanes y de la Antártica Chilena', 'CL-MA'),
-(13, 'Región Metropolitana de Santiago', 'CL-RM'),
-(14, 'Región de Los Ríos', 'CL-LR'),
-(15, 'Arica y Parinacota', 'CL-AP');
+--- EMPRESA 
+INSERT INTO Empresa (id, rut, nombre, fk_direccion, fecha_creacion) VALUES
+(1, '3.333.333-3', 'EasyViajes', 1, '2022-11-08 00:00:00');
 
+-- USUARIO
+-- pwd = testing
+-- pwd = administrator
+INSERT INTO Usuario (id, mail, password, nombre, fecha_creacion, fk_estado, fk_empresa, fk_permiso) VALUES
+(1, 'adm@adm.com', '$2y$10$urw9CmEtJwDi5SY/vbaOeeD7RC106CxTCfvZ2wqgblugamP6Wq..W', 'ADM_EasyViajes', '2022-11-08 00:00:00', 1, 1, 1);

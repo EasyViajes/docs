@@ -442,8 +442,8 @@ INSERT INTO Direccion (id, nombre, fk_comuna) VALUES
 (1, 'EasyViajes',  1);
 
 --- EMPRESA 
-INSERT INTO Empresa (id, rut, nombre, fk_direccion, fecha_creacion) VALUES
-(1, '3.333.333-3', 'EasyViajes', 1, '2022-11-08 00:00:00');
+INSERT INTO Empresa (id, rut, nombre, fk_direccion, fecha_creacion, fk_estado) VALUES
+(1, '3.333.333-3', 'EasyViajes', 1, '2022-11-08 00:00:00', 1);
 
 -- USUARIO
 -- pwd = testing

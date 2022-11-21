@@ -19,6 +19,7 @@ CREATE TABLE `Empresa` (
 	`nombre` varchar(30) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
 	`fk_direccion` int NOT NULL,
+	`fk_estado` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -82,7 +83,7 @@ CREATE TABLE `Permiso` (
 
 CREATE TABLE `Estado` (
 	`id` int NOT NULL AUTO_INCREMENT,
-	`nombre` varchar(10) NOT NULL,
+	`nombre` varchar(25) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -146,6 +147,8 @@ ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk2` FOREIGN KEY (`fk_permiso`) RE
 
 ALTER TABLE `Empresa` ADD CONSTRAINT `Empresa_fk0` FOREIGN KEY (`fk_direccion`) REFERENCES `Direccion`(`id`);
 
+ALTER TABLE `Empresa` ADD CONSTRAINT `Empresa_fk1` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
+
 ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
@@ -191,5 +194,4 @@ ALTER TABLE `RutaVehiculo` ADD CONSTRAINT `RutaVehiculo_fk1` FOREIGN KEY (`fk_ru
 ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk0` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
 
 ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk1` FOREIGN KEY (`fk_conductor`) REFERENCES `Conductor`(`id`);
-
 

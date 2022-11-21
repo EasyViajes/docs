@@ -119,7 +119,7 @@ CREATE TABLE `Region` (
 
 CREATE TABLE `Direccion` (
 	`id` int NOT NULL AUTO_INCREMENT,
-	`nombre` varchar(100) NOT NULL AUTO_INCREMENT,
+	`nombre` varchar(50) NOT NULL,
 	`fk_comuna` int(11) NOT NULL,
 	PRIMARY KEY (`id`)
 );
@@ -191,20 +191,5 @@ ALTER TABLE `RutaVehiculo` ADD CONSTRAINT `RutaVehiculo_fk1` FOREIGN KEY (`fk_ru
 ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk0` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
 
 ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk1` FOREIGN KEY (`fk_conductor`) REFERENCES `Conductor`(`id`);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -3,7 +3,8 @@ INSERT INTO Estado (nombre) VALUES
 ('Activo'),
 ('Inactivo'),
 ('Pendiente'),
-('Pendiente_pwd'),
+('Pwd_pend'),
+('Exitoso'),
 ('Atrasado'),
 ('Otro');
 

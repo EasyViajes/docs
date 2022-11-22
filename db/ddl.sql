@@ -7,9 +7,9 @@ CREATE TABLE `Usuario` (
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`password` varchar(255) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
+	`fk_permiso` int NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
-	`fk_permiso` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -50,21 +50,13 @@ CREATE TABLE `Vehiculo` (
 CREATE TABLE `Ruta` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`hora_salida` TIME NOT NULL,
+	`precio` int NOT NULL,
 	`fecha_creacion` DATE NOT NULL,
 	`direccion_origen` varchar(255) NOT NULL,
 	`direccion_destino` varchar(255) NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
 	`fk_vehiculo` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `Pasaje` (
-	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
-	`precio` int NOT NULL,
-	`fk_estado` int NOT NULL,
-	`fk_ruta` int NOT NULL,
-	`fk_empresa` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -92,17 +84,17 @@ CREATE TABLE `Venta` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`fecha_compra` DATETIME NOT NULL,
 	`fk_estado` int NOT NULL,
-	`fk_pasaje` int NOT NULL,
+	`fk_ruta` int NOT NULL,
 	`fk_empresa` int NOT NULL,
 	`fk_cliente` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_permiso`) REFERENCES `Permiso`(`id`);
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk2` FOREIGN KEY (`fk_permiso`) REFERENCES `Permiso`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `Empresa` ADD CONSTRAINT `Empresa_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
@@ -122,28 +114,11 @@ ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk1` FOREIGN KEY (`fk_empresa`) REFERENC
 
 ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk2` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
 
-ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
-
-ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk1` FOREIGN KEY (`fk_ruta`) REFERENCES `Ruta`(`id`);
-
-ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
-
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
-ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk1` FOREIGN KEY (`fk_pasaje`) REFERENCES `Pasaje`(`id`);
+ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk1` FOREIGN KEY (`fk_ruta`) REFERENCES `Ruta`(`id`);
 
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
-
-
-
-
-
-
-
-
-
-
-
 

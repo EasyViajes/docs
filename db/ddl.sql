@@ -3,9 +3,9 @@ USE EasyViajes;
 
 CREATE TABLE `Usuario` (
 	`id` int NOT NULL AUTO_INCREMENT,
+	`nombre` varchar(55) NOT NULL,
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`password` varchar(255) NOT NULL,
-	`nombre` varchar(55) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE `Usuario` (
 CREATE TABLE `Empresa` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`rut` varchar(15) NOT NULL UNIQUE,
-	`nombre` varchar(30) NOT NULL,
+	`nombre` varchar(30) NOT NULL UNIQUE,
 	`fecha_creacion` DATETIME NOT NULL,
 	`fk_direccion` int NOT NULL,
 	`fk_estado` int NOT NULL,
@@ -32,6 +32,7 @@ CREATE TABLE `Conductor` (
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
 	`fk_direccion` int NOT NULL,
+	`fk_vehiculo` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -40,7 +41,6 @@ CREATE TABLE `Vehiculo` (
 	`patente` varchar(10) NOT NULL UNIQUE,
 	`marca` varchar(30) NOT NULL,
 	`asientos` int(2) NOT NULL,
-	`fecha_vehiculo` DATE NOT NULL,
 	`mensualidad` int NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
@@ -50,11 +50,12 @@ CREATE TABLE `Vehiculo` (
 CREATE TABLE `Ruta` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`hora_salida` TIME NOT NULL,
-	`fecha_creacion` DATETIME NOT NULL,
+	`fecha_creacion` DATE NOT NULL,
 	`fk_direccion_origen` int NOT NULL,
 	`fk_direccion_destino` int NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
+	`fk_vehiculo` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -125,20 +126,6 @@ CREATE TABLE `Direccion` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `RutaVehiculo` (
-	`id` int NOT NULL AUTO_INCREMENT,
-	`fk_vehiculo` int NOT NULL,
-	`fk_ruta` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `ConductorVehiculo` (
-	`id` int NOT NULL AUTO_INCREMENT,
-	`fk_vehiculo` int NOT NULL,
-	`fk_conductor` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
@@ -155,6 +142,8 @@ ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk1` FOREIGN KEY (`fk_empresa`
 
 ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk2` FOREIGN KEY (`fk_direccion`) REFERENCES `Direccion`(`id`);
 
+ALTER TABLE `Conductor` ADD CONSTRAINT `Conductor_fk3` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
+
 ALTER TABLE `Vehiculo` ADD CONSTRAINT `Vehiculo_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Vehiculo` ADD CONSTRAINT `Vehiculo_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
@@ -166,6 +155,8 @@ ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk1` FOREIGN KEY (`fk_direccion_destino`
 ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk2` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
 ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk3` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
+
+ALTER TABLE `Ruta` ADD CONSTRAINT `Ruta_fk4` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
 
 ALTER TABLE `Pasaje` ADD CONSTRAINT `Pasaje_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
@@ -187,11 +178,4 @@ ALTER TABLE `Provincia` ADD CONSTRAINT `Provincia_fk0` FOREIGN KEY (`fk_region`)
 
 ALTER TABLE `Direccion` ADD CONSTRAINT `Direccion_fk0` FOREIGN KEY (`fk_comuna`) REFERENCES `Comuna`(`id`);
 
-ALTER TABLE `RutaVehiculo` ADD CONSTRAINT `RutaVehiculo_fk0` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
-
-ALTER TABLE `RutaVehiculo` ADD CONSTRAINT `RutaVehiculo_fk1` FOREIGN KEY (`fk_ruta`) REFERENCES `Ruta`(`id`);
-
-ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk0` FOREIGN KEY (`fk_vehiculo`) REFERENCES `Vehiculo`(`id`);
-
-ALTER TABLE `ConductorVehiculo` ADD CONSTRAINT `ConductorVehiculo_fk1` FOREIGN KEY (`fk_conductor`) REFERENCES `Conductor`(`id`);
 

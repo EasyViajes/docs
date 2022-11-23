@@ -7,9 +7,9 @@ CREATE TABLE `Usuario` (
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`password` varchar(255) NOT NULL,
 	`fecha_creacion` DATETIME NOT NULL,
-	`fk_permiso` int NOT NULL,
 	`fk_estado` int NOT NULL,
 	`fk_empresa` int NOT NULL,
+	`fk_permiso` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE `Empresa` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`rut` varchar(15) NOT NULL UNIQUE,
 	`nombre` varchar(30) NOT NULL UNIQUE,
-	`fecha_creacion` DATETIME NOT NULL,
+	`fecha_creacion` DATE NOT NULL,
 	`direccion` varchar(255) NOT NULL,
 	`fk_estado` int NOT NULL,
 	PRIMARY KEY (`id`)
@@ -62,6 +62,8 @@ CREATE TABLE `Ruta` (
 
 CREATE TABLE `Cliente` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
+	`nombre` varchar(50) NOT NULL,
+	`apellido` varchar(50) NOT NULL,
 	`mail` varchar(100) NOT NULL UNIQUE,
 	`secreto` varchar(13) NOT NULL UNIQUE,
 	`fecha_creacion` DATETIME NOT NULL,
@@ -90,11 +92,11 @@ CREATE TABLE `Venta` (
 	PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_permiso`) REFERENCES `Permiso`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk1` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_fk2` FOREIGN KEY (`fk_permiso`) REFERENCES `Permiso`(`id`);
 
 ALTER TABLE `Empresa` ADD CONSTRAINT `Empresa_fk0` FOREIGN KEY (`fk_estado`) REFERENCES `Estado`(`id`);
 
@@ -121,4 +123,14 @@ ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk1` FOREIGN KEY (`fk_ruta`) REFERENCE
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk2` FOREIGN KEY (`fk_empresa`) REFERENCES `Empresa`(`id`);
 
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
+
+
+
+
+
+
+
+
+
+
 

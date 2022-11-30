@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS EasyViajes;
+DROP DATABASE EasyViajes;
+CREATE DATABASE EasyViajes;
 USE EasyViajes;
 
 CREATE TABLE `Usuario` (
@@ -126,11 +127,4 @@ ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERE
 
 
 
-
-
-
-
-
-
-
-
+SOURCE dump.sql

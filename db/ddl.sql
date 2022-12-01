@@ -61,16 +61,6 @@ CREATE TABLE `Ruta` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Cliente` (
-	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
-	`nombre` varchar(50) NOT NULL,
-	`apellido` varchar(50) NOT NULL,
-	`mail` varchar(100) NOT NULL UNIQUE,
-	`secreto` varchar(13) NOT NULL UNIQUE,
-	`fecha_creacion` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
 CREATE TABLE `Permiso` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(30) NOT NULL UNIQUE,
@@ -90,6 +80,14 @@ CREATE TABLE `Venta` (
 	`fk_ruta` int NOT NULL,
 	`fk_empresa` int NOT NULL,
 	`fk_cliente` int NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Cliente` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`mail` varchar(255) NOT NULL UNIQUE,
+	`secret` varchar(6) NOT NULL,
+	`fecha_creacion` DATE NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -125,6 +123,5 @@ ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk2` FOREIGN KEY (`fk_empresa`) REFERE
 
 ALTER TABLE `Venta` ADD CONSTRAINT `Venta_fk3` FOREIGN KEY (`fk_cliente`) REFERENCES `Cliente`(`id`);
 
-
-
+-- Preloaded data
 SOURCE dump.sql

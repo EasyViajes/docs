@@ -52,6 +52,7 @@ CREATE TABLE `Ruta` (
 	`id` int NOT NULL AUTO_INCREMENT UNIQUE,
 	`hora_salida` TIME NOT NULL,
 	`precio` int NOT NULL,
+	`dia` varchar(20) NOT NULL,
 	`fecha_creacion` DATE NOT NULL,
 	`direccion_origen` varchar(255) NOT NULL,
 	`direccion_destino` varchar(255) NOT NULL,
